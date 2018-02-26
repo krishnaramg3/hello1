@@ -31,57 +31,64 @@ es.indices.refresh(index="test")
 res = es.indices.get_mapping()
 rgf=res['test']['mappings']['tweet']['properties']
 fiel=list(rgf.keys())
-print(" enter the query need1.\n1.one word search,two word search,multifield search\n2.specific field search search\n3.and search\n4.full string match")
-x=0
-while True:
-    try:
-        x = int(input("Please enter a number: "))
-        if x in range(1,5):
-            break
-        else:
-           raise ValueError
+t='y'
+while t=='y':
+    print(" enter the query need1.\n1.one word search,two word search,multifield search\n2.specific field search search\n3.and search\n4.full string match")
+    x=0
+    while True:
+        try:
+            x = int(input("Please enter a number: "))
+            if x in range(1,5):
+                break
+            else:
+                raise ValueError
 
-    except ValueError:
-         print("Oops!  That was no valid number.  Try again...")
-if x==4:
-    str1 = input ("enter the query: ")
-    st ='"'+str1+'"'
-    y = fiel[x]
-    bod = {"query": {"query_string": {"query": st}}}
-    bod = json.dumps (bod)
-    res = es.search (index="test", body=bod)
-    print (res)
-if x==3:
-    print("and field")
-    k = 0
-    str1 = input ("enter the query: ")
-    lis=str1.split(" ")
-    y = fiel[x]
-    st= lis[0]+" AND "+lis[1]
-    bod ={"query": {"query_string" :{"fields" : fiel,"query" : st }}}
-    bod = json.dumps (bod)
-    res = es.search(index="test", body=bod)
-    print( res)
-if x==2:
-    print("search in the specific field")
-    k = 0
-    for i in fiel:
-        print(str(k)+"."+i)
-        k+=1
-    x = int (input ("Please enter a number: "))
-    str1=input("enter the query")
-    y=fiel[x]
-    bod = {"query": {"term": {y:str1}}}
-    bod = json.dumps (bod)
-    res = es.search(index="test", body=bod)
-    print( res)
-if x==1:
-    str2=input ("enter the query: ")
-    bod ={"query": {"multi_match": {"query":  str2,"type":   "most_fields","fields": fiel}}}
-    bod = json.dumps (bod)
-    print (bod)
-    res = es.search(index="test", body=bod)
-    print( res)
+        except ValueError:
+            print("Oops!  That was no valid number.  Try again...")
+
+    if x==4:
+        str1 = input ("enter the query: ")
+        st ='"'+str1+'"'
+        y = fiel[x]
+        bod = {"query": {"query_string": {"query": st}}}
+        bod = json.dumps (bod)
+        res = es.search (index="test", body=bod)
+        print (res)
+        t= input("what to search another y/n:- ")
+    if x==3:
+        print("and field")
+        k = 0
+        str1 = input ("enter the query: ")
+        lis=str1.split(" ")
+        y = fiel[x]
+        st= lis[0]+" AND "+lis[1]
+        bod ={"query": {"query_string" :{"fields" : fiel,"query" : st }}}
+        bod = json.dumps (bod)
+        res = es.search(index="test", body=bod)
+        print( res)
+        t = input ("what to search another y/n :-")
+    if x==2:
+        print("search in the specific field")
+        k = 0
+        for i in fiel:
+            print(str(k)+"."+i)
+            k+=1
+        x = int (input ("select the fields you want to search"))
+        str1=input("enter the query")
+        y=fiel[x]
+        bod = {"query": {"term": {y:str1}}}
+        bod = json.dumps (bod)
+        res = es.search(index="test", body=bod)
+        print( res)
+        t = input ("what to search another y/n :-")
+    if x==1:
+        str2=input ("enter the query: ")
+        bod ={"query": {"multi_match": {"query":  str2,"type":   "most_fields","fields": fiel}}}
+        bod = json.dumps (bod)
+        print (bod)
+        res = es.search(index="test", body=bod)
+        print( res)
+        t = input ("what to search another y/n :-")
 
 
 
