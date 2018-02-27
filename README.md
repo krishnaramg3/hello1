@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 A Python script to download lecture videos for a udemy.com course.
 
 [![PyPI version](https://badge.fury.io/py/udemy-dl.svg)](http://badge.fury.io/py/udemy-dl)
@@ -52,3 +53,6 @@ For information about all available parameters, use the `--help` parameter
 
 You may uninstall the required `requests` module too but be aware that those might be required for other Python modules.
 
+=======
+# new-project
+>>>>>>> 493476998b43785f1d43110ea92a49b61fdd7b02
